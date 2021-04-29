@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+
+    <com.example.myapplication11.gallery.PagerGallery
+        ohos:id="$+id:page_slider"
+        ohos:height="match_parent"
+        ohos:width="match_parent"
+        ohos:layout_alignment="horizontal_center"
+        ohos:background_element="#FFFFFF"
+        >
+
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:image_src="$media:bg_family"
+            ></Image>
+
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:image_src="$media:bg_friend"
+            ></Image>
+
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:image_src="$media:bg_splash"
+            ></Image>
+
+        <Image
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:image_src="$media:ova"
+            ></Image>
+
+
+    </com.example.myapplication11.gallery.PagerGallery>
+
+
+</DirectionalLayout>
