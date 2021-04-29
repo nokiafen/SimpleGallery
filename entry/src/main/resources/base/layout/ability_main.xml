@@ -14,29 +14,33 @@
         ohos:background_element="#FFFFFF"
         >
 
-        <Image
-            ohos:height="match_content"
-            ohos:width="match_content"
-            ohos:image_src="$media:bg_family"
-            ></Image>
+<!--        <Image-->
+<!--            ohos:height="match_content"-->
+<!--            ohos:width="match_content"-->
+<!--            ohos:image_src="$media:bg_family"-->
+<!--            ohos:scale_mode="stretch"-->
+<!--            ></Image>-->
 
-        <Image
-            ohos:height="match_content"
-            ohos:width="match_content"
-            ohos:image_src="$media:bg_friend"
-            ></Image>
+<!--        <Image-->
+<!--            ohos:height="match_content"-->
+<!--            ohos:width="match_content"-->
+<!--            ohos:image_src="$media:bg_friend"-->
+<!--            ohos:scale_mode="stretch"-->
+<!--            ></Image>-->
 
-        <Image
-            ohos:height="match_content"
-            ohos:width="match_content"
-            ohos:image_src="$media:bg_splash"
-            ></Image>
+<!--        <Image-->
+<!--            ohos:height="match_content"-->
+<!--            ohos:width="match_content"-->
+<!--            ohos:image_src="$media:bg_splash"-->
+<!--            ohos:scale_mode="stretch"-->
+<!--            ></Image>-->
 
-        <Image
-            ohos:height="match_content"
-            ohos:width="match_content"
-            ohos:image_src="$media:ova"
-            ></Image>
+<!--        <Image-->
+<!--            ohos:height="match_content"-->
+<!--            ohos:width="match_content"-->
+<!--            ohos:image_src="$media:ova"-->
+<!--            ohos:scale_mode="stretch"-->
+<!--            ></Image>-->
 
 
     </com.example.myapplication11.gallery.PagerGallery>

@@ -1,10 +1,17 @@
 package com.example.myapplication11.gallery;
 
 import ohos.agp.components.*;
+import ohos.agp.components.element.PixelMapElement;
 import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
+import ohos.media.image.PixelMap;
 import ohos.multimodalinput.event.TouchEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static ohos.multimodalinput.event.TouchEvent.*;
 import static ohos.multimodalinput.event.TouchEvent.CANCEL;
@@ -20,8 +27,10 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     private int mHeight;
     private int offSet = 0;
     ScrollHelper mScroller;
-    private int selectIndex = 0;
+    private int selectIndex = 2;
     private int calulateWidth;
+    private int lastIndex=-1;
+    BlurTransformation blurTransformation;
 
     public PagerGallery(Context context) {
         super(context);
@@ -45,6 +54,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
         setArrangeListener(this);
         setTouchEventListener(this);
         mScroller = new ScrollHelper();
+         blurTransformation = new BlurTransformation(100);
     }
 
 
@@ -55,7 +65,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
         setEstimatedSize(MeasureSpec.getMeasureSpec(myWidth, MeasureSpec.PRECISE), MeasureSpec.getMeasureSpec(myHeight, MeasureSpec.PRECISE));
 
         picNormalWidth = Float.valueOf(myWidth - itemPad * 2).intValue();
-        picNormalHeight = Float.valueOf(myHeight * 0.5f).intValue();
+        picNormalHeight = Float.valueOf(myHeight * 0.6f).intValue();
         calulateWidth = (int) (myWidth - leftExtraPad * 2);
         itemInternalDistance = calulateWidth + itemPad;
         HiLog.warn(LABEL, "write in main onEstimateSize: counter %{public}d %{public}d %{public}f %{public}d", picNormalWidth, picNormalHeight, itemInternalDistance, mHeight);
@@ -63,8 +73,9 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
             Component child = getComponentAt(i);
             child.estimateSize(MeasureSpec.getMeasureSpec(calulateWidth, MeasureSpec.PRECISE), MeasureSpec.getMeasureSpec(picNormalHeight, MeasureSpec.PRECISE));
         }
-
-
+        if(selectIndex!=0&&mCurrentDistance==0){
+            mCurrentDistance=-selectIndex*itemInternalDistance;
+        }
         return true;
     }
 
@@ -165,7 +176,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     }
 
     private void computeValueUp() {
-        mCurrentDistance=selectIndex*itemInternalDistance;
+        mCurrentDistance=-selectIndex*itemInternalDistance;
         postLayout();
     }
 
@@ -189,19 +200,20 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
                 child.setScale(caculateScaleRatio(startX,i),caculateScaleRatio(startX,i));
                 HiLog.warn(LABEL, "write in main onArrange: counter %{public}f , %{public}d  %{public}d", startX, child.getWidth(), child.getHeight());
             }
-            startX += getEstimatedWidth() - (int) leftExtraPad * 2 + itemPad;
+            startX += calulateWidth+ itemPad;
         }
         return true;
     }
 
     private float caculateScaleRatio(float startX,int i) {
-        float radio =Math.abs(getEstimatedWidth()/2-startX)/(calulateWidth/2);
+       float middleLineOffset= Math.abs(getEstimatedWidth()/2f-(startX+calulateWidth/2f));
+        float radio =middleLineOffset/itemInternalDistance;
         HiLog.warn(LABEL, "write in main onArrange: caculateScaleRatio %{public}f  i= %{public}d" ,radio,i);
 
         if (radio>1) {
             return 0.9f;
         }else {
-            return  0.9f+0.1f* radio;
+            return  (1-radio)*0.1f+0.9f;
         }
     }
 
@@ -215,9 +227,37 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
 
         }
         float temp = mCurrentDistance;
-        selectIndex= Math.round(temp/itemInternalDistance);
+        selectIndex= -Math.round(temp/itemInternalDistance);
         HiLog.warn(LABEL, "write in main process: selectIndex %{public}d", selectIndex);
+        if (selectIndex!=lastIndex) {
+            lastIndex=selectIndex;
+            setBackground(new PixelMapElement(getBlurPixelMapFromIndex( selectIndex)));
+        }
         postLayout();
+    }
+
+    public void setImages(int [] resourseId){
+        removeAllComponents();
+        blurPixelMap.clear();
+       Image image;
+        for (int i = 0; i < resourseId.length; i++) {
+            image =new Image(getContext());
+            image.setScaleMode(Image.ScaleMode.STRETCH);
+            image.setPixelMap(resourseId[i]);
+            addComponent(image);
+        }
+        postLayout();
+
+    }
+
+    public void setSelectIndex(int index){
+        if(index<0||index>getChildCount()-1){
+            return;
+        }
+        selectIndex =index;
+        mCurrentDistance=-selectIndex*itemInternalDistance;
+        postLayout();
+        setBackground(new PixelMapElement(getBlurPixelMapFromIndex(index)));
     }
 
     private VelocityDetector mVelocityTracker;
@@ -231,4 +271,13 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     private final int MIN_VELOCITY = 50;
     private final int MAX_VELOCITY = 8000;
 
+    private Map<Integer,PixelMap> blurPixelMap =new HashMap<>();
+
+   public PixelMap getBlurPixelMapFromIndex(int index){
+       PixelMap pixelMap =  blurPixelMap.get(index);
+       if (pixelMap==null) {
+           blurPixelMap.put(index, pixelMap =blurTransformation.transform( ((Image)getComponentAt(index)).getPixelMap()));
+       }
+       return  pixelMap;
+    }
 }
