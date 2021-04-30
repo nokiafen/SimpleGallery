@@ -14,7 +14,7 @@
         >
 
 
-        <com.example.myapplication11.gallery.PagerGallery
+        <com.golddragonSpring.gallery.PagerGallery
             ohos:id="$+id:page_slider"
             ohos:height="match_parent"
             ohos:width="match_parent"
@@ -36,7 +36,7 @@
             ohos:top_padding="5vp"
             >
 
-            <com.example.myapplication11.indicator.TIndicator
+            <com.golddragonSpring.indicator.TIndicator
                 ohos:id="$+id:tIndicator"
                 ohos:height="match_content"
                 ohos:width="match_content"

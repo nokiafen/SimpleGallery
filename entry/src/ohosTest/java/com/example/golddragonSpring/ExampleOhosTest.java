@@ -1,4 +1,4 @@
-package com.example.myapplication11;
+package com.example.golddragonSpring;
 
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
 import org.junit.Test;
