@@ -228,6 +228,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
             image = new Image(getContext());
             image.setScaleMode(Image.ScaleMode.CENTER);
             image.setPixelMap(resourseId[i]);
+            image.setCornerRadius(AttrHelper.vp2px(10,getContext()));
             addComponent(image);
         }
         postLayout();
