@@ -1,6 +1,6 @@
 {
   "app": {
-    "bundleName": "com.example.myapplication11",
+    "bundleName": "com.good.gallery",
     "vendor": "example",
     "version": {
       "code": 1,
@@ -8,8 +8,7 @@
     },
     "apiVersion": {
       "compatible": 4,
-      "target": 5,
-      "releaseType": "Beta1"
+      "target": 5
     }
   },
   "deviceConfig": {},

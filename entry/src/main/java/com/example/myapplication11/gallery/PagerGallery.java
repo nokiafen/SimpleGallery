@@ -3,21 +3,15 @@ package com.example.myapplication11.gallery;
 import ohos.agp.components.*;
 import ohos.agp.components.element.PixelMapElement;
 import ohos.app.Context;
-import ohos.hiviewdfx.HiLog;
-import ohos.hiviewdfx.HiLogLabel;
 import ohos.media.image.PixelMap;
 import ohos.multimodalinput.event.TouchEvent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static ohos.multimodalinput.event.TouchEvent.*;
-import static ohos.multimodalinput.event.TouchEvent.CANCEL;
 
-public class PagerGallery extends ComponentContainer implements Component.EstimateSizeListener, ComponentContainer.ArrangeListener, Component.TouchEventListener {
-    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "PagerGallery");
+public class PagerGallery extends ComponentContainer implements Component.EstimateSizeListener, ComponentContainer.ArrangeListener, Component.TouchEventListener, Component.BindStateChangedListener {
     private float leftExtraPad = 0;
     private float itemPad = 0;
     private int picNormalWidth = 400;
@@ -29,7 +23,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     ScrollHelper mScroller;
     private int selectIndex = 2;
     private int calulateWidth;
-    private int lastIndex=-1;
+    private int lastIndex = -1;
     BlurTransformation blurTransformation;
 
     public PagerGallery(Context context) {
@@ -46,6 +40,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     }
 
     private void init(Context context, AttrSet attrSet) {
+        setBindStateChangedListener(this);
         float density = AttrHelper.getDensity(context);
         leftExtraPad = density * 38;
         itemPad = density * 5;
@@ -54,7 +49,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
         setArrangeListener(this);
         setTouchEventListener(this);
         mScroller = new ScrollHelper();
-         blurTransformation = new BlurTransformation(100);
+        blurTransformation = new BlurTransformation(100);
     }
 
 
@@ -68,13 +63,12 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
         picNormalHeight = Float.valueOf(myHeight * 0.6f).intValue();
         calulateWidth = (int) (myWidth - leftExtraPad * 2);
         itemInternalDistance = calulateWidth + itemPad;
-        HiLog.warn(LABEL, "write in main onEstimateSize: counter %{public}d %{public}d %{public}f %{public}d", picNormalWidth, picNormalHeight, itemInternalDistance, mHeight);
         for (int i = 0; i < getChildCount(); i++) {
             Component child = getComponentAt(i);
             child.estimateSize(MeasureSpec.getMeasureSpec(calulateWidth, MeasureSpec.PRECISE), MeasureSpec.getMeasureSpec(picNormalHeight, MeasureSpec.PRECISE));
         }
-        if(selectIndex!=0&&mCurrentDistance==0){
-            mCurrentDistance=-selectIndex*itemInternalDistance;
+        if (selectIndex != 0 && mCurrentDistance == 0) {
+            mCurrentDistance = -selectIndex * itemInternalDistance;
         }
         return true;
     }
@@ -120,7 +114,6 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
         final int action = touchEvent.getAction();
         final int xCoordinate = (int) (int) touchEvent.getPointerPosition(0).getX();
         final int yCoordinate = (int) touchEvent.getPointerPosition(0).getY();
-        HiLog.warn(LABEL, "write in main onTouchEvent: WheelHorizontalViewR  %{public}d", touchEvent.getAction());
 
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityDetector.obtainInstance();
@@ -155,7 +148,6 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
                 }
                 mVelocityTracker.calculateCurrentVelocity(1000, MAX_VELOCITY, MAX_VELOCITY);
                 final int xVelocity = (int) mVelocityTracker.getHorizontalVelocity();
-                HiLog.warn(LABEL, "write in main process: POINT_MOVEf %{public}d ", xVelocity);
                 if (Math.abs(xVelocity) >= MIN_VELOCITY) {
 
                 }
@@ -176,7 +168,7 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     }
 
     private void computeValueUp() {
-        mCurrentDistance=-selectIndex*itemInternalDistance;
+        mCurrentDistance = -selectIndex * itemInternalDistance;
         postLayout();
     }
 
@@ -185,40 +177,30 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     public boolean onArrange(int left, int top, int width, int height) {
         final int count = getChildCount();
         float startX = leftExtraPad + mCurrentDistance;
-        HiLog.warn(LABEL, "write in main onArrange: counter %{public}f ", startX);
 
         for (int i = 0; i < count; i++) {
             Component child = getComponentAt(i);
             if (child.getVisibility() != Component.HIDE) {
                 child.arrange((int) startX, (int) getEstimatedHeight() / 2 - child.getEstimatedHeight() / 2, calulateWidth, child.getEstimatedHeight());
-//                caculateScaleRatio(startX);
-//                if (i == Math.abs(selectIndex)) {
-//                    child.setScale(1, 1);
-//                }else {
-//                    child.setScale(0.9f,0.9f);
-//                }
-                child.setScale(caculateScaleRatio(startX,i),caculateScaleRatio(startX,i));
-                HiLog.warn(LABEL, "write in main onArrange: counter %{public}f , %{public}d  %{public}d", startX, child.getWidth(), child.getHeight());
+                child.setScale(caculateScaleRatio(startX, i), caculateScaleRatio(startX, i));
             }
-            startX += calulateWidth+ itemPad;
+            startX += calulateWidth + itemPad;
         }
         return true;
     }
 
-    private float caculateScaleRatio(float startX,int i) {
-       float middleLineOffset= Math.abs(getEstimatedWidth()/2f-(startX+calulateWidth/2f));
-        float radio =middleLineOffset/itemInternalDistance;
-        HiLog.warn(LABEL, "write in main onArrange: caculateScaleRatio %{public}f  i= %{public}d" ,radio,i);
+    private float caculateScaleRatio(float startX, int i) {
+        float middleLineOffset = Math.abs(getEstimatedWidth() / 2f - (startX + calulateWidth / 2f));
+        float radio = middleLineOffset / itemInternalDistance;
 
-        if (radio>1) {
+        if (radio > 1) {
             return 0.9f;
-        }else {
-            return  (1-radio)*0.1f+0.9f;
+        } else {
+            return (1 - radio) * 0.1f + 0.9f;
         }
     }
 
     private void computeLocation() {
-        HiLog.warn(LABEL, "write in main process: computeLocation %{public}f %{public}f ", leftExtraPad, mCurrentDistance);
         if (mCurrentDistance >= 0) {
             mCurrentDistance = 0;
 
@@ -227,22 +209,24 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
 
         }
         float temp = mCurrentDistance;
-        selectIndex= -Math.round(temp/itemInternalDistance);
-        HiLog.warn(LABEL, "write in main process: selectIndex %{public}d", selectIndex);
-        if (selectIndex!=lastIndex) {
-            lastIndex=selectIndex;
-            setBackground(new PixelMapElement(getBlurPixelMapFromIndex( selectIndex)));
+        selectIndex = -Math.round(temp / itemInternalDistance);
+        if (selectIndex != lastIndex) {
+            lastIndex = selectIndex;
+            setBackground(new PixelMapElement(getBlurPixelMapFromIndex(selectIndex)));
+            if (onPageChangeListener != null) {
+                onPageChangeListener.onPageSelected(selectIndex);
+            }
         }
         postLayout();
     }
 
-    public void setImages(int [] resourseId){
+    public void setImages(int[] resourseId) {
         removeAllComponents();
         blurPixelMap.clear();
-       Image image;
+        Image image;
         for (int i = 0; i < resourseId.length; i++) {
-            image =new Image(getContext());
-            image.setScaleMode(Image.ScaleMode.STRETCH);
+            image = new Image(getContext());
+            image.setScaleMode(Image.ScaleMode.CENTER);
             image.setPixelMap(resourseId[i]);
             addComponent(image);
         }
@@ -250,15 +234,16 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
 
     }
 
-    public void setSelectIndex(int index){
-        if(index<0||index>getChildCount()-1){
+    public void setSelectIndex(int index) {
+        if (index < 0 || index > getChildCount() - 1) {
             return;
         }
-        selectIndex =index;
-        mCurrentDistance=-selectIndex*itemInternalDistance;
+        selectIndex = index;
+        mCurrentDistance = -selectIndex * itemInternalDistance;
         postLayout();
-        setBackground(new PixelMapElement(getBlurPixelMapFromIndex(index)));
+//        setBackground(new PixelMapElement(getBlurPixelMapFromIndex(index)));
     }
+
 
     private VelocityDetector mVelocityTracker;
     private boolean isMoving;
@@ -271,13 +256,68 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
     private final int MIN_VELOCITY = 50;
     private final int MAX_VELOCITY = 8000;
 
-    private Map<Integer,PixelMap> blurPixelMap =new HashMap<>();
+    private Map<Integer, PixelMap> blurPixelMap = new HashMap<>();
 
-   public PixelMap getBlurPixelMapFromIndex(int index){
-       PixelMap pixelMap =  blurPixelMap.get(index);
-       if (pixelMap==null) {
-           blurPixelMap.put(index, pixelMap =blurTransformation.transform( ((Image)getComponentAt(index)).getPixelMap()));
-       }
-       return  pixelMap;
+    public PixelMap getBlurPixelMapFromIndex(int index) {
+        PixelMap pixelMap = blurPixelMap.get(index);
+        if (pixelMap == null) {
+            blurPixelMap.put(index, pixelMap = blurTransformation.transform(((Image) getComponentAt(index)).getPixelMap()));
+        }
+        return pixelMap;
     }
+
+
+    public int getSelectIndex() {
+        return selectIndex;
+    }
+
+
+    private OnPageChangeListener onPageChangeListener;
+
+    public void addOnPageChangeListener(OnPageChangeListener onPageChangeListener) {
+        this.onPageChangeListener = onPageChangeListener;
+    }
+
+    @Override
+    public void onComponentBoundToWindow(Component component) {
+        setBackground(new PixelMapElement(getBlurPixelMapFromIndex(selectIndex)));
+    }
+
+    @Override
+    public void onComponentUnboundFromWindow(Component component) {
+
+    }
+
+    public interface OnPageChangeListener {
+
+        /**
+         * This method will be invoked when the current page is scrolled, either as part
+         * of a programmatically initiated smooth scroll or a user initiated touch scroll.
+         *
+         * @param position             Position index of the first page currently being displayed.
+         *                             Page position+1 will be visible if positionOffset is nonzero.
+         * @param positionOffset       Value from [0, 1) indicating the offset from the page at position.
+         * @param positionOffsetPixels Value in pixels indicating the offset from position.
+         */
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+
+        /**
+         * This method will be invoked when a new page becomes selected. Animation is not
+         * necessarily complete.
+         *
+         * @param position Position index of the new selected page.
+         */
+        void onPageSelected(int position);
+
+        /**
+         * Called when the scroll state changes. Useful for discovering when the user
+         * begins dragging, when the pager is automatically settling to the current page,
+         * or when it is fully stopped/idle.
+         *
+         * @param state The new scroll state.
+         */
+        void onPageScrollStateChanged(int state);
+    }
+
 }
+

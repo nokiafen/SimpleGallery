@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DirectionalLayout
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/res/ohos-auto"
     ohos:height="match_parent"
     ohos:width="match_parent"
     ohos:orientation="vertical">
 
 
-    <com.example.myapplication11.gallery.PagerGallery
-        ohos:id="$+id:page_slider"
-        ohos:height="match_parent"
+    <DependentLayout
+        ohos:height="0"
         ohos:width="match_parent"
-        ohos:layout_alignment="horizontal_center"
-        ohos:background_element="#FFFFFF"
+        ohos:weight="1"
         >
 
-<!--        <Image-->
-<!--            ohos:height="match_content"-->
-<!--            ohos:width="match_content"-->
-<!--            ohos:image_src="$media:bg_family"-->
-<!--            ohos:scale_mode="stretch"-->
-<!--            ></Image>-->
 
-<!--        <Image-->
-<!--            ohos:height="match_content"-->
-<!--            ohos:width="match_content"-->
-<!--            ohos:image_src="$media:bg_friend"-->
-<!--            ohos:scale_mode="stretch"-->
-<!--            ></Image>-->
+        <com.example.myapplication11.gallery.PagerGallery
+            ohos:id="$+id:page_slider"
+            ohos:height="match_parent"
+            ohos:width="match_parent"
+            ohos:background_element="#FFFFFF"
+            ohos:layout_alignment="horizontal_center"
+            />
 
-<!--        <Image-->
-<!--            ohos:height="match_content"-->
-<!--            ohos:width="match_content"-->
-<!--            ohos:image_src="$media:bg_splash"-->
-<!--            ohos:scale_mode="stretch"-->
-<!--            ></Image>-->
+        <DirectionalLayout
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:align_parent_bottom="true"
+            ohos:alignment="horizontal_center"
+            ohos:background_element="$graphic:shape_round_white_15vp"
+            ohos:bottom_margin="50vp"
+            ohos:bottom_padding="5vp"
+            ohos:horizontal_center="true"
+            ohos:left_padding="10vp"
+            ohos:right_padding="10vp"
+            ohos:top_padding="5vp"
+            >
 
-<!--        <Image-->
-<!--            ohos:height="match_content"-->
-<!--            ohos:width="match_content"-->
-<!--            ohos:image_src="$media:ova"-->
-<!--            ohos:scale_mode="stretch"-->
-<!--            ></Image>-->
+            <com.example.myapplication11.indicator.TIndicator
+                ohos:id="$+id:tIndicator"
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:align_parent_bottom="true"
+                ohos:horizontal_center="true"
+                app:dotColor="$color:colorPrimaryDark"
+                app:selectedDotColor="$color:colorPrimary"
+
+                />
+        </DirectionalLayout>
 
 
-    </com.example.myapplication11.gallery.PagerGallery>
-
+    </DependentLayout>
 
 </DirectionalLayout>
