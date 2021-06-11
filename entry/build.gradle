@@ -1,6 +1,26 @@
 apply plugin: 'com.huawei.ohos.hap'
 apply plugin: 'com.huawei.ohos.decctest'
 ohos {
+    signingConfigs {
+        debug {
+            storeFile file('D:\\workcopy\\chl_pro\\签名密钥\\barcodescanner_debug.p12')
+            storePassword '0000001EA6458F104DACD783AC533D90D48A4986EE3D9C42B12E89A753E249730F103454CA55CEE8ACBB20E654AB'
+            keyAlias = 'barcodescanner_debug'
+            keyPassword '0000001E8A0DCC208A0C2184E2EBBBF57E9D4833FE67A2783E60974B8856A46EDB3927D248E2F917F02D6176281F'
+            signAlg = 'SHA256withECDSA'
+            profile file('D:\\workcopy\\chl_pro\\签名密钥\\RxTool\\RxToolDebug.p7b')
+            certpath file('D:\\workcopy\\chl_pro\\签名密钥\\barcodescanner_debug.cer')
+        }
+        release {
+            storeFile file('D:\\workcopy\\chl_pro\\签名密钥\\barcodescanner_debug.p12')
+            storePassword '00000024CF74623423435AA7FB4D4403FC202DEB766154A23C824A9EF6F46406567B1380E49586FB2E536A396FF04B4DA7FFE9EE'
+            keyAlias = 'barcodescanner_debug'
+            keyPassword '000000245D825D77D4B13AD98F2AB9377893D2C6F5F46958FBE1A623A3FD54EB752A8087538C18855D05F5E5509060C0E7AC737A'
+            signAlg = 'SHA256withECDSA'
+            profile file('D:\\workcopy\\chl_pro\\签名密钥\\RxTool\\RxToolDebug.p7b')
+            certpath file('D:\\workcopy\\chl_pro\\签名密钥\\barcodescanner_debug.cer')
+        }
+    }
     compileSdkVersion 5
     defaultConfig {
         compatibleSdkVersion 4

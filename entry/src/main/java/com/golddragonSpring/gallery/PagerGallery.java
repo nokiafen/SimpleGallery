@@ -1,6 +1,8 @@
 package com.golddragonSpring.gallery;
 
 import com.golddragonSpring.utils.BlurTransformation;
+import ohos.agp.animation.Animator;
+import ohos.agp.animation.AnimatorValue;
 import ohos.agp.components.*;
 import ohos.agp.components.element.PixelMapElement;
 import ohos.app.Context;
@@ -150,8 +152,8 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
                 mVelocityTracker.calculateCurrentVelocity(1000, MAX_VELOCITY, MAX_VELOCITY);
                 final int xVelocity = (int) mVelocityTracker.getHorizontalVelocity();
                 if (Math.abs(xVelocity) >= MIN_VELOCITY) {
-
-                }
+                    new AnimHelper((int) mCurrentDistance,xVelocity).start();
+                }else
 //                isMoving = false;
 //                mCurrentDistance = 0;
 //                postLayout();
@@ -320,6 +322,55 @@ public class PagerGallery extends ComponentContainer implements Component.Estima
          * @param state The new scroll state.
          */
         void onPageScrollStateChanged(int state);
+    }
+
+
+    public class  AnimHelper extends AnimatorValue implements  AnimatorValue.ValueUpdateListener , Animator.StateChangedListener {
+        private  int startValue;
+        private  int totalProgress;
+
+        public AnimHelper(int startValue,int totalProgress) {
+            this.startValue = startValue;
+            this.totalProgress = totalProgress;
+            setValueUpdateListener(this);
+            setStateChangedListener(this);
+        }
+
+        @Override
+        public void onUpdate(AnimatorValue animatorValue, float v) {
+             mCurrentDistance = startValue+ (int)(v*totalProgress);
+             computeLocation();
+        }
+
+        @Override
+        public void onStart(Animator animator) {
+
+        }
+
+        @Override
+        public void onStop(Animator animator) {
+            computeValueUp();
+        }
+
+        @Override
+        public void onCancel(Animator animator) {
+
+        }
+
+        @Override
+        public void onEnd(Animator animator) {
+
+        }
+
+        @Override
+        public void onPause(Animator animator) {
+
+        }
+
+        @Override
+        public void onResume(Animator animator) {
+
+        }
     }
 
 }
