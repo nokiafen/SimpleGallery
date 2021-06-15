@@ -12,6 +12,28 @@ import ohos.multimodalinput.event.TouchEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *                    .::::.
+ *                  .::::::::.
+ *                 :::::::::::  Come On!
+ *             ..:::::::::::'
+ *           '::::::::::::'
+ *             .::::::::::
+ *        '::::::::::::::..
+ *             ..::::::::::::.
+ *           ``::::::::::::::::
+ *            ::::``:::::::::'        .:::.
+ *           ::::'   ':::::'       .::::::::.
+ *         .::::'      ::::     .:::::::'::::.
+ *        .:::'       :::::  .:::::::::' ':::::.
+ *       .::'        :::::.:::::::::'      ':::::.
+ *      .::'         ::::::::::::::'         ``::::.
+ *  ...:::           ::::::::::::'              ``::.
+ * ```` ':.          ':::::::::'                  ::::..
+ *                    '.:::::'                    ':'````..
+ */
+
+
 import static ohos.multimodalinput.event.TouchEvent.*;
 
 public class PagerGallery extends ComponentContainer implements Component.EstimateSizeListener, ComponentContainer.ArrangeListener, Component.TouchEventListener, Component.BindStateChangedListener {

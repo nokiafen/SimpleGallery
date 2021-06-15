@@ -17,7 +17,7 @@ public class MainAbilitySlice extends AbilitySlice {
     private void initPageSlider() {
 
         PagerGallery pagerGallery = (PagerGallery) findComponentById(ResourceTable.Id_page_slider);
-        pagerGallery.setImages(new int[]{ResourceTable.Media_bg_family, ResourceTable.Media_ova, ResourceTable.Media_bg_friend, ResourceTable.Media_bg_splash});
+        pagerGallery.setImages(new int[]{ResourceTable.Media_1temp, ResourceTable.Media_2temp, ResourceTable.Media_3temp, ResourceTable.Media_4temp});
         pagerGallery.setSelectIndex(3);
 
         TIndicator TIndicator = (TIndicator) findComponentById(ResourceTable.Id_tIndicator);
