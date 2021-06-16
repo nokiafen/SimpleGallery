@@ -1,8 +1,9 @@
 package com.golddragonSpring.slice;
 
 import com.golddragonSpring.ResourceTable;
-import com.golddragonSpring.gallery.PagerGallery;
-import com.golddragonSpring.indicator.TIndicator;
+
+import mrc.heli.dot.gallery.PagerGallery;
+import mrc.heli.dot.indicator.TIndicator;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 
