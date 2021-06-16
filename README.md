@@ -2,8 +2,8 @@ smart-gallery
 =========================
 smart-gallery a library  displaying images with gallery.
 
-<img src="screenshot/Screenshot_1.jpg"  height="626" width="1280"><img src="screenshot/Screenshot_2.jpg"  height="626" width="1280">
-<img src="screenshot/Screenshot_3.jpg"  height="626" width="1280"><img src="screenshot/Screenshot_4.jpg"  height="626" width="1280">
+<img src="screenshot/Screenshot_1.jpg"  width="626" height="1280"><img src="screenshot/Screenshot_2.jpg"   width="626" height="1280">
+<img src="screenshot/Screenshot_3.jpg"  width="626" height="1280"><img src="screenshot/Screenshot_4.jpg"   width="626" height="1280">
 ![Sample Image](screenshot/SVID_20210615_172455_1.gif)
 ## Including in your project
 
