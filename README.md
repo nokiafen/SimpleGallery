@@ -2,12 +2,9 @@ smart-gallery
 =========================
 smart-gallery a library  displaying images with gallery.
 
-![Sample Image](screenshot/Screenshot_1.jpg)
-![Sample Image](screenshot/Screenshot_2.jpg)
-![Sample Image](screenshot/Screenshot_3.jpg)
-![Sample Image](screenshot/Screenshot_4.jpg)
+<img src="screenshot/Screenshot_1.jpg"  height="330" width="495"><img src="screenshot/Screenshot_2.jpg"  height="330" width="495">
+<img src="screenshot/Screenshot_3.jpg"  height="330" width="495"><img src="screenshot/Screenshot_4.jpg"  height="330" width="495">
 ![Sample Image](screenshot/SVID_20210615_172455_1.gif)
-
 ## Including in your project
 
 ##### smart-gallery to your project
@@ -19,8 +16,7 @@ smart-gallery a library  displaying images with gallery.
     include ':demo', ':mylibrary'
 
     3. Introduce the dependency of the module under the project.  you need to modify the build.gradle file under the main module to add the dependency:
-
-   implementation project(path: ':mylibrary')
+    implementation project(path: ':mylibrary')
 
     Solution 2: to be done ?
 
@@ -41,13 +37,13 @@ Sample code:
 ```
 
 
-...
+```
              pagerGallery.setImages(new int[]{ResourceTable.Media_1temp, ResourceTable.Media_2temp, ResourceTable.Media_3temp, ResourceTable.Media_4temp});
              pagerGallery.setSelectIndex(3);
 
             TIndicator TIndicator = (TIndicator) findComponentById(ResourceTable.Id_tIndicator);
             TIndicator.attachToViewPager(pagerGallery);
-...
+```
 
 Credits
 -------
