@@ -1,6 +1,6 @@
-smart-gallery
+simple-gallery
 =========================
-smart-gallery a library  displaying images with gallery.
+simple-gallery a library  displaying images as gallery.
 
 <img src="screenshot/Screenshot_1.jpg"  width="626" height="1280"><img src="screenshot/Screenshot_2.jpg"   width="626" height="1280">
 <img src="screenshot/Screenshot_3.jpg"  width="626" height="1280"><img src="screenshot/Screenshot_4.jpg"   width="626" height="1280">
@@ -24,7 +24,7 @@ More on the  configuration can be found in the Project.
 
 Usage
 -----
-Define in xml like as follow  ，set images with codes below also you can attach it with an indicator.
+Define in xml as follow 
 Sample code:
 ```xml
            <mrc.heli.dot.gallery.PagerGallery
@@ -35,7 +35,7 @@ Sample code:
             ohos:layout_alignment="horizontal_center"
             />
 ```
-
+set images with codes below , also you can attach it with an indicator.
 
 ```
              pagerGallery.setImages(new int[]{ResourceTable.Media_1temp, ResourceTable.Media_2temp, ResourceTable.Media_3temp, ResourceTable.Media_4temp});
